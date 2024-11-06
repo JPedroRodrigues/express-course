@@ -6,7 +6,7 @@ function getAllBooks() {
 
 function getBookById(id) {
     const books = getAllBooks();
-    const book = books.map(book => book.id == id);
+    const book = books.filter(book => book.id == id);
     return book;
 }
 
@@ -31,9 +31,17 @@ function updateBook(id, updates) {
     return true;
 }
 
+function deleteBookById(id) {
+    const books = getAllBooks();    
+    const filteredBooks = books.filter(currentBook => currentBook.id != id);
+    fs.writeFileSync("database/db.json", JSON.stringify(filteredBooks));
+    return true;
+}
+
 module.exports = {
     getAllBooks,
     getBookById,
     insertBook,
-    updateBook
+    updateBook,
+    deleteBookById
 }
